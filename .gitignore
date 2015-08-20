@@ -9,6 +9,7 @@ bin/
 /project/target
 /target
 tmp/
+conf/application.conf
 test-result
 server.pid
 *.iml
