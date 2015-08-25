@@ -5,7 +5,32 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET    /demo/grid                           controllers.Application.demo()
+GET   /demo/grid/demo1               controllers.Application.demo_grid_json()
+GET   /demo/grid/demo2               controllers.Application.demo_grid_json1()
+GET  /demo/grid/shorting             controllers.Application.demo_grid_shorting()
+
+GET   /empleado/datos               controllers.Application.get_empleado()
+
+
+GET  /demo/grid/nom_comp             controllers.Application.nom_comp()
+GET  /demo/grid/empleados_nom        controllers.Application.empleados_nom()
+
+
+
+
+POST /empleado/datos2                controllers.Application.get_empleado2()
+
+
+POST /empleado/datos3                controllers.Application.empleados_nom()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+
+GET   /webjars/*file   controllers.WebJarAssets.at(file)
+
+
+
 
 

@@ -1,0 +1,48 @@
+@(message: String)
+
+@main("Switch Button") {
+
+<div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">
+    <div id="jqxgrid"></div>
+</div>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            var url = "/assets/beverages.txt";
+            // prepare the data
+            var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'name' },
+                    { name: 'type' },
+                    { name: 'calories' },
+                    { name: 'totalfat' },
+                    { name: 'protein' },
+                ],
+                id: 'id',
+                url: url
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                downloadComplete: function (data, status, xhr) { },
+                loadComplete: function (data) { },
+                loadError: function (xhr, status, error) { }
+            });
+            $("#jqxgrid").jqxGrid(
+            {
+                width: 670,
+                source: dataAdapter,
+                columns: [
+                  { text: 'Name', datafield: 'name', width: 250 },
+                  { text: 'Beverage Type', datafield: 'type', width: 250 },
+                  { text: 'Calories', datafield: 'calories', width: 180 },
+                  { text: 'Total Fat', datafield: 'totalfat', width: 120 },
+                  { text: 'Protein', datafield: 'protein', width: 120 }
+              ]
+            });
+        });
+    </script>
+
+
+
+}

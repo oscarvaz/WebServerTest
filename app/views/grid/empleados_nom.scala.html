@@ -1,0 +1,45 @@
+@(selectNomina:  Map[String, String], selectarea: Map[String, String] )
+
+@main("nomimas empleados") {
+
+<form method="post" action="/empleado/datos3">
+
+    <div>
+
+        <label> nomina</label>
+        <select name="nomina">
+        <option value="">Seleccionar nomina</option>
+
+            @for( (key, value)  <- selectNomina) {
+                <option value="@key"> @value    </option>
+            }
+
+        </select>
+
+
+
+    </div>
+    <div>
+    <label> area</label>
+  <select name="area">
+  <option value=""> Seleccionar area</option>
+      @for( (key, value) <-selectarea){
+      <option value="@key"> @value </option>
+
+      }
+
+  </select>
+      </div>
+
+    <div>
+    <label> Fecha inicial</label>
+    <input type="text" name="fec_ini">
+    </div>
+   <div>
+    <label> Fecha final</label>
+    <input type="text" name="fec_fin">
+
+   </div>
+</form>
+}
+

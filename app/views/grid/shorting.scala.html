@@ -1,0 +1,84 @@
+
+@(message: String)
+
+@main("Switch Button") {
+
+
+<div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">
+    <div id="jqxgrid">
+    </div>
+    <div id="eventslog" style="margin-top: 30px;">
+        <div style="float: left; margin-right: 10px;">
+            <input value="Remove Sort" id="clearsortingbutton" type="button" />
+            <div style="margin-top: 10px;" id='sortbackground'>Sort Background</div>
+        </div>
+        <div style="margin-left: 100px; float: left;">
+            Event Log:
+            <div style="border: none;" id="events">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            var url = "/empleado/datos";
+            // prepare the data
+            var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'nombre', map:'nombre',type:'string'  },
+                    { name: 'apellido_paterno', map:'apellido_paterno', type:'string' },
+                    { name: 'apellido_materno', map:'apellido_materno', type:'string'  },
+                    { name: 'fecha_nacimiento', map:'fecha_nacimiento' ,type:'string' },
+                    { name: 'es_sueldo', map:'es_sueldo' ,type:'float' },
+                ],
+                id: { name: "nombre", map: "nombre" },
+                url: url,
+                sortcolumn: 'nombre',
+                sortdirection: 'asc'
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            // create jqxgrid.
+            $("#jqxgrid").jqxGrid(
+            {
+                width: 850,
+                height: 450,
+                source: dataAdapter,
+                sortable: true,
+                filterable: true,
+                altrows: true,
+                columns: [
+                    { text: 'Nombre', datafield: 'nombre', width: '20%' },
+                  { text: 'Apellido Paterno', datafield: 'apellido_paterno', width: '20%' },
+                  { text: 'Apellido Materno', datafield: 'apellido_materno', width:'20%' },
+                  { text: 'Fecha de Nacimiento', datafield: 'fecha_nacimiento', width: '15%' },
+                  { text: 'Sueldo', datafield: 'es_sueldo', width: '25%' }
+                ]
+            });
+            $('#events').jqxPanel({ width: 300, height: 80});
+            $("#jqxgrid").on("sort", function (event) {
+                $("#events").jqxPanel('clearcontent');
+                var sortinformation = event.args.sortinformation;
+                var sortdirection = sortinformation.sortdirection.ascending ? "ascending" : "descending";
+                if (!sortinformation.sortdirection.ascending && !sortinformation.sortdirection.descending) {
+                    sortdirection = "null";
+                }
+                var eventData = "Triggered 'sort' event <div>Column:" + sortinformation.sortcolumn + ", Direction: " + sortdirection + "</div>";
+                $('#events').jqxPanel('prepend', '<div style="margin-top: 5px;">' + eventData + '</div>');
+            });
+            $('#clearsortingbutton').jqxButton({ height: 25});
+            $('#sortbackground').jqxCheckBox({checked: true, height: 25});
+            // clear the sorting.
+            $('#clearsortingbutton').click(function () {
+                $("#jqxgrid").jqxGrid('removesort');
+            });
+            // show/hide sort background
+            $('#sortbackground').on('change', function (event) {
+                $("#jqxgrid").jqxGrid({ showsortcolumnbackground: event.args.checked });
+            });
+        });
+    </script>
+
+}

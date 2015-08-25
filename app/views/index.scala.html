@@ -1,10 +1,43 @@
 @(message: String)
 
-@main("bienvenido a app play") {
+@main("Switch Button") {
 
-<form action= "/" method = "post">
-    <input name ="name">
-    <input type="pulsa">
-</form>
+
+    <h4>
+        Horizontal Switch Button</h4>
+    <div id='jqxButton'>
+    </div>
+    <br />
+    <br />
+    <div id='eventlog1'>
+    </div>
+    <h4>
+        Vertical Switch Button</h4>
+    <div id='jqxVerticalButton'>
+    </div>
+    <br />
+    <br />
+    <div id='eventlog2'>
+    </div>
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            // Create Switch Button.
+            $("#jqxButton").jqxSwitchButton({ theme: 'classic', width: '100', height: '30', checked: true });
+            $("#jqxVerticalButton").jqxSwitchButton({ orientation: 'vertical', theme: 'classic', width: '30', height: '100', checked: true });
+            // bind to the 'change' event. The event occurs when the Switch Button's state is changed.
+            $("#jqxButton").bind('change', function (event) {
+                var checked = event.args.check;
+                $("#eventlog1").html("Checked: " + checked);
+            });
+            $("#jqxVerticalButton").bind('change', function (event) {
+                var checked = event.args.check;
+                $("#eventlog2").html("Checked: " + checked);
+            });
+        });
+    </script>
+
+
 
 }

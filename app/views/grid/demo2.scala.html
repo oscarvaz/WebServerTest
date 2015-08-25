@@ -1,0 +1,50 @@
+@(message: String)
+
+@main("Switch Button") {
+
+<div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">
+
+    <h5>@message</h5>
+    <div id="jqxgrid"></div>
+</div>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            var url = "/empleado/datos";
+            // prepare the data
+            var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'nombre' },
+                    { name: 'apellido_paterno' },
+                    { name: 'apellido_materno' },
+                    { name: 'fecha_nacimiento' },
+                    { name: 'es_sueldo' },
+                ],
+                id: 'id',
+                url: url
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                downloadComplete: function (data, status, xhr) { },
+                loadComplete: function (data) { },
+                loadError: function (xhr, status, error) { }
+            });
+            $("#jqxgrid").jqxGrid(
+            {
+                width: 800,
+                source: dataAdapter,
+                columns: [
+                  { text: 'Nombre', datafield: 'nombre', width: '20%' },
+                  { text: 'Apellido Paterno', datafield: 'apellido_paterno', width: '20%' },
+                  { text: 'Apellido Materno', datafield: 'apellido_materno', width:'20%' },
+                  { text: 'Fecha de Nacimiento', datafield: 'fecha_nacimiento', width: '15%' },
+                  { text: 'Sueldo', datafield: 'es_sueldo', width: '25%' }
+              ]
+            });
+        });
+    </script>
+
+
+
+}
